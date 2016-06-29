@@ -17,13 +17,15 @@ while(True):
 
     # Our operations on the frame come here
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (7,7) , 1)
     ret,gray = cv2.threshold(gray,170,255,cv2.THRESH_BINARY_INV)
     gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+    gray2 = cv2.GaussianBlur(gray2, (7,7) , 1)
     ret,gray2 = cv2.threshold(gray2,127,255,cv2.THRESH_BINARY)
     #substract the images
     sub = gray - gray2
     #applying sobel
-    sobel = cv2.Sobel(sub,cv2.CV_64F,1,0,ksize=5)
+    sobel = cv2.Sobel(sub,cv2.CV_64F,1,1,ksize=3)
     cv2.imshow('sobel',sobel)
     if cv2.waitKey(1) & 0xFF == ord('y'): #save on pressing 'y' 
         cv2.destroyAllWindows()
